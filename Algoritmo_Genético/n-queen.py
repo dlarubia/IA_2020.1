@@ -1,7 +1,7 @@
 import random
 import matplotlib.pyplot
 
-board_size = 4
+board_size = 32
 
 # Gera uma população => conjunto de cromossomos, tal que cada cromossomo é uma configuração do tabuleiro
 def gen_population(size):
@@ -138,7 +138,7 @@ def genetic_algorithm(population_size, n_generations, crossover_rate, mutation_r
         for chromosome in new_generation:
             best_fitness = max_fitness
             f_chromosome = fitness(chromosome)
-            sum_fitnesses += sum_fitnesses + f_chromosome
+            sum_fitnesses += f_chromosome
             if f_chromosome < best_fitness:
                 best_fitness = f_chromosome
             #print("Fitness cromossomo: " + str(best_fitness))
@@ -150,7 +150,8 @@ def genetic_algorithm(population_size, n_generations, crossover_rate, mutation_r
         
         best_fitnesses.append(best_fitness)
         print("Melhor fitness:  " + str(best_fitness) + "  ------  Cromossomo: " + str(chromosome))
-        average_fitnesses.append(sum_fitnesses/len(population))
+        average_fitnesses.append(sum_fitnesses/population_size)
+    print("Medias: " + str(average_fitnesses))
     matplotlib.pyplot.plot(generations, best_fitnesses)
     matplotlib.pyplot.show()
     matplotlib.pyplot.plot(generations, average_fitnesses)
@@ -158,6 +159,6 @@ def genetic_algorithm(population_size, n_generations, crossover_rate, mutation_r
     return answers
     
     
-answers = genetic_algorithm(10, 100, 0.03, 0.05, False)
+answers = genetic_algorithm(10, 10000, 0.01, 0.3, False)
 if answers:
     print("# -- Resultado encontrado -- #\n" + "Cromossomos: " + str(answers) + "\n")
